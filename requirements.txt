@@ -6,3 +6,8 @@ streamlit>=1.39
 ultralytics>=8.4.0
 yt-dlp>=2024.8.6
 pytest>=8.0
+lapx>=0.5.2
+ftfy
+regex
+tqdm
+git+https://github.com/ultralytics/CLIP.git
