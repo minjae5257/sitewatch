@@ -4,7 +4,7 @@ PyYAML>=6.0
 pillow>=10.0
 streamlit>=1.39
 ultralytics>=8.4.0
-yt-dlp>=2024.8.6
+yt-dlp
 pytest>=8.0
 lapx>=0.5.2
 ftfy
