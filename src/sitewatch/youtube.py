@@ -1,7 +1,13 @@
+import os
 import re
 from typing import Any, Dict, Optional, Tuple
 
 import yt_dlp
+
+os.environ.setdefault(
+    "OPENCV_FFMPEG_CAPTURE_OPTIONS",
+    "protocol_whitelist;file,crypto,data,http,https,tcp,tls",
+)
 
 _YT = re.compile(
     r"^(https?://)?(www\.|m\.)?(youtube\.com|youtu\.be)/", re.IGNORECASE
