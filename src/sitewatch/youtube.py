@@ -1,7 +1,5 @@
-from future import annotations
-
 import re
-from typing import Any
+from typing import Any, Dict, Optional, Tuple
 
 import yt_dlp
 
@@ -15,7 +13,7 @@ def is_youtube(text: str) -> bool:
     return bool(_YT.match(text.strip()))
 
 
-def _pick_format(info: dict[str, Any]) -> dict[str, Any] | None:
+def _pick_format(info: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     is_live = bool(info.get("is_live"))
     candidates = []
     for f in info.get("formats") or []:
@@ -41,7 +39,7 @@ def _pick_format(info: dict[str, Any]) -> dict[str, Any] | None:
     return candidates[0][4]
 
 
-def prepare_source(text: str) -> tuple[str, dict | None]:
+def prepare_source(text: str) -> Tuple[str, Optional[dict]]:
     """유튜브 주소를 OpenCV가 읽을 수 있는 재생 주소로 바꿉니다."""
     url = text.strip()
     opts = {
@@ -49,13 +47,13 @@ def prepare_source(text: str) -> tuple[str, dict | None]:
         "no_warnings": True,
         "noplaylist": True,
         "skip_download": True,
-        "ignore_no_formats_error": True,  # 형식 선택 실패로 멈추지 않게 함
+        "ignore_no_formats_error": True,
         "socket_timeout": 20,
     }
     try:
         with yt_dlp.YoutubeDL(opts) as ydl:
             info = ydl.extract_info(url, download=False)
-    except Exception as exc:  # yt-dlp 오류 문장을 그대로 보여줌
+    except Exception as exc:
         raise RuntimeError(f"유튜브 주소를 열지 못했습니다: {exc}") from exc
 
     if not info:
